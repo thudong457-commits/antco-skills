@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "antco-skills/delivery-manifest.schema.json",
+  "title": "Manifest bàn giao Antco",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_slug", "tenant", "run_id", "generated_at", "artifacts", "resources", "validator"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "project_slug": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,60}$" },
+    "tenant": { "type": "string", "description": "Host của workspace, không giao thức, không đường dẫn" },
+    "run_id": { "type": ["string", "null"], "pattern": "^ar_[0-9]{8}_[a-z0-9]{6,32}$" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "role", "sha256"],
+        "properties": {
+          "file": { "type": "string", "description": "Đường dẫn tương đối trong thư mục dự án" },
+          "revision": { "type": "string", "pattern": "^v[0-9]+$" },
+          "role": { "enum": ["source", "reader", "answers", "snapshot", "payload"] },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "source": { "type": "string", "description": "Bắt buộc với role=reader: file nguồn sinh ra bản đọc" }
+        }
+      }
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["w_id", "type", "ref", "action"],
+        "properties": {
+          "w_id": { "type": "string", "pattern": "^W-[0-9]{3,}$" },
+          "type": { "type": "string", "description": "object | field | layout | layout_rule | duplicate_rule | security_rule | status_rule | path | tracking | action | form | related_list | filter | report_type | report | dashboard" },
+          "ref": { "type": "string" },
+          "id": { "type": ["string", "null"] },
+          "action": { "enum": ["created", "updated", "reused"] }
+        }
+      }
+    },
+    "demo_records": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "objects", "cleaned"],
+      "properties": {
+        "count": { "type": "integer", "minimum": 0 },
+        "objects": { "type": "array", "items": { "type": "string" } },
+        "cleaned": { "type": "boolean" }
+      }
+    },
+    "validator": {
+      "type": "object",
+      "required": ["version", "result"],
+      "properties": { "version": { "type": "string" }, "result": { "enum": ["PASS", "FAIL"] } }
+    }
+  }
+}

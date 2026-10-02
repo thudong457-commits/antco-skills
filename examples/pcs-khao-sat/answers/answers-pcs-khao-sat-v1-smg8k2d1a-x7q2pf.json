@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "project_slug": "pcs-khao-sat",
+  "source_file": "yeu-cau-giai-phap-v1.md",
+  "source_revision": "v1",
+  "source_sha256": "e4c5ede209fbf8db05b7ef86022d566fc1c2cd377c32643cbc7e58ca09a6be81",
+  "submission_id": "smg8k2d1a-x7q2pf",
+  "submitted_at": "2026-10-02T10:15:00+07:00",
+  "answers": [
+    {
+      "question_id": "Q-001",
+      "request_ids": [
+        "REQ-002"
+      ],
+      "choice": "3 mức: Thấp, Trung bình, Cao"
+    },
+    {
+      "question_id": "Q-002",
+      "request_ids": [
+        "REQ-004"
+      ],
+      "choice": "Trưởng nhóm kỹ thuật",
+      "answer": "Giá trị trên 50 triệu thì báo thêm Giám đốc, nhưng chỉ cần thông báo, không cần duyệt trên hệ thống."
+    },
+    {
+      "question_id": "Q-003",
+      "request_ids": [
+        "REQ-003"
+      ],
+      "choice": "Nhiều phương án (khách chọn 1)"
+    },
+    {
+      "question_id": "Q-004",
+      "request_ids": [
+        "REQ-005"
+      ],
+      "choice": "Có, khoảng 8 phiếu",
+      "answer": "Gắn vào 3 khách hàng có sẵn: sẽ gửi tên trong chat."
+    },
+    {
+      "question_id": "Q-005",
+      "request_ids": [
+        "REQ-001"
+      ],
+      "choice": "Chưa cần"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "Phiếu khảo sát - Tạo",
+  "screens": "create",
+  "platforms": { "web": true, "mobile": true },
+  "allowSelect": false,
+  "isActive": true,
+  "assign": [],
+  "config": {
+    "v": 2,
+    "page": { "padding": [0, 0, 0, 0], "bg": null, "showBorder": false },
+    "rows": [
+      {
+        "id": "row_main", "slug": "row_main", "type": "row", "ratios": [1], "gap": 20, "maxWidth": 1000, "maxUnit": "px", "align": "center",
+        "columns": [
+          {
+            "id": "col_main", "slug": "col_main", "type": "column", "gap": 16,
+            "children": [
+              {
+                "id": "sec_info", "slug": "sec_info", "type": "section", "name": "", "showName": false, "showBorder": true, "visible": true, "gap": 16,
+                "children": [
+                  {
+                    "id": "grp_chung", "slug": "grp_chung", "type": "group", "name": "Thông tin chung", "showName": true, "cols": 2, "collapsible": false,
+                    "items": [
+                      { "id": "f_khach_hang", "type": "field", "key": "khach_hang", "showLabel": true },
+                      { "id": "f_ngay", "type": "field", "key": "ngay_khao_sat", "showLabel": true },
+                      { "id": "f_dia_chi", "type": "field", "key": "dia_chi", "showLabel": true, "wide": true },
+                      { "id": "f_ktv", "type": "field", "key": "ky_thuat_vien", "showLabel": true },
+                      { "id": "f_loai", "type": "field", "key": "loai_co_so", "showLabel": true }
+                    ]
+                  },
+                  {
+                    "id": "grp_them", "slug": "grp_them", "type": "group", "name": "Thông tin thêm", "showName": true, "cols": 1, "collapsible": true,
+                    "items": [
+                      { "id": "db_huong_dan", "type": "display", "name": "Hướng dẫn", "text": "Ghi rõ địa chỉ cơ sở và người liên hệ tại hiện trường." },
+                      { "id": "f_trang_thai", "type": "field", "key": "trang_thai", "showLabel": true }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

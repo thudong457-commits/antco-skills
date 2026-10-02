@@ -1,0 +1,23 @@
+# Bí mật - không bao giờ commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+client_secret*.json
+*service-account*.json
+
+# Artifact dự án của người dùng (có thể chứa dữ liệu công ty)
+artifacts/
+answers/
+!examples/*/answers/
+snapshots/
+payloads/
+
+# Môi trường
+node_modules/
+dist/
+.DS_Store
+Thumbs.db

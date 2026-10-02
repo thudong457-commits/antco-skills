@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "project_slug": "pcs-khao-sat",
+  "tenant": "pcs.example.com",
+  "run_id": "ar_20261002_k3x9qa",
+  "generated_at": "2026-10-02T12:58:00+07:00",
+  "artifacts": [
+    {
+      "file": "yeu-cau-giai-phap-v1.md",
+      "revision": "v1",
+      "role": "source",
+      "sha256": "e4c5ede209fbf8db05b7ef86022d566fc1c2cd377c32643cbc7e58ca09a6be81"
+    },
+    {
+      "file": "yeu-cau-giai-phap-v1.html",
+      "revision": "v1",
+      "role": "reader",
+      "sha256": "1b2f6ab490d99902ab594635eef23e3ba09d9752c2ef150d45f7d53bdf74382f",
+      "source": "yeu-cau-giai-phap-v1.md"
+    },
+    {
+      "file": "answers/answers-pcs-khao-sat-v1-smg8k2d1a-x7q2pf.json",
+      "revision": "v1",
+      "role": "answers",
+      "sha256": "d7fdb146fd2c2a64dc52528a4f786b10ec3fda50a00ebf6cc1fd104e24e3bd5d"
+    },
+    {
+      "file": "yeu-cau-giai-phap-v2.md",
+      "revision": "v2",
+      "role": "source",
+      "sha256": "c87550ffba4927448d73ff0d286e48e0ef2bffa71c43195dcabb034f4d3150b0"
+    },
+    {
+      "file": "yeu-cau-giai-phap-v2.html",
+      "revision": "v2",
+      "role": "reader",
+      "sha256": "1f14b9a56c483e68d2d0e1100cd2dfd9d434dbe8d55b8ae525ebddd8ef1d4d57",
+      "source": "yeu-cau-giai-phap-v2.md"
+    },
+    {
+      "file": "thiet-ke-v1.md",
+      "revision": "v1",
+      "role": "source",
+      "sha256": "52191cbdddb053609d71e0bddb380596f7710041da21248dd9d70b8f359e719f"
+    },
+    {
+      "file": "ke-hoach-v1.md",
+      "revision": "v1",
+      "role": "source",
+      "sha256": "582af06e74ba0c4bbe9b579720e6741ad5f546162c2763067825562716a0a454"
+    },
+    {
+      "file": "ban-giao-v1.md",
+      "revision": "v1",
+      "role": "source",
+      "sha256": "d7567ef8d3d18d2817685f430ac07f1d2c12488bb38181cedf93e5801082dc6c"
+    }
+  ],
+  "resources": [
+    {
+      "w_id": "W-002",
+      "type": "object",
+      "ref": "cobj:phieu_khao_sat",
+      "id": "SAMPLE-0001",
+      "action": "created"
+    },
+    {
+      "w_id": "W-003",
+      "type": "object",
+      "ref": "cobj:phuong_an_ky_thuat",
+      "id": "SAMPLE-0002",
+      "action": "created"
+    },
+    {
+      "w_id": "W-004",
+      "type": "field",
+      "ref": "cobj:phieu_khao_sat",
+      "id": "SAMPLE-0003",
+      "action": "created"
+    },
+    {
+      "w_id": "W-005",
+      "type": "object",
+      "ref": "cobj:khu_vuc_khao_sat",
+      "id": "SAMPLE-0004",
+      "action": "created"
+    },
+    {
+      "w_id": "W-006",
+      "type": "field",
+      "ref": "cobj:khu_vuc_khao_sat",
+      "id": "SAMPLE-0005",
+      "action": "created"
+    },
+    {
+      "w_id": "W-007",
+      "type": "field",
+      "ref": "cobj:phieu_khao_sat",
+      "id": "SAMPLE-0006",
+      "action": "created"
+    },
+    {
+      "w_id": "W-008",
+      "type": "field",
+      "ref": "cobj:phuong_an_ky_thuat",
+      "id": "SAMPLE-0007",
+      "action": "created"
+    },
+    {
+      "w_id": "W-009",
+      "type": "status_rule",
+      "ref": "cobj:phuong_an_ky_thuat",
+      "id": "SAMPLE-0008",
+      "action": "created"
+    },
+    {
+      "w_id": "W-010",
+      "type": "action",
+      "ref": "cobj:phuong_an_ky_thuat",
+      "id": "SAMPLE-0009",
+      "action": "created"
+    },
+    {
+      "w_id": "W-011",
+      "type": "path",
+      "ref": "cobj:phieu_khao_sat",
+      "id": "SAMPLE-0010",
+      "action": "created"
+    },
+    {
+      "w_id": "W-012",
+      "type": "related_list",
+      "ref": "cobj:phieu_khao_sat",
+      "id": "SAMPLE-0011",
+      "action": "created"
+    },
+    {
+      "w_id": "W-013",
+      "type": "layout",
+      "ref": "cobj:phieu_khao_sat",
+      "id": "SAMPLE-0012",
+      "action": "created"
+    },
+    {
+      "w_id": "W-014",
+      "type": "layout",
+      "ref": "cobj:phieu_khao_sat",
+      "id": "SAMPLE-0013",
+      "action": "created"
+    },
+    {
+      "w_id": "W-015",
+      "type": "filter",
+      "ref": "cobj:phieu_khao_sat",
+      "id": "SAMPLE-0014",
+      "action": "created"
+    },
+    {
+      "w_id": "W-016",
+      "type": "report",
+      "ref": "cobj:phieu_khao_sat",
+      "id": "SAMPLE-0015",
+      "action": "created"
+    },
+    {
+      "w_id": "W-017",
+      "type": "report",
+      "ref": "cobj:phuong_an_ky_thuat",
+      "id": "SAMPLE-0016",
+      "action": "created"
+    },
+    {
+      "w_id": "W-018",
+      "type": "dashboard",
+      "ref": "-",
+      "id": "SAMPLE-0017",
+      "action": "created"
+    }
+  ],
+  "demo_records": {
+    "count": 38,
+    "objects": [
+      "cobj:phieu_khao_sat",
+      "cobj:khu_vuc_khao_sat",
+      "cobj:phuong_an_ky_thuat"
+    ],
+    "cleaned": false
+  },
+  "validator": {
+    "version": "1.0.0",
+    "result": "PASS"
+  }
+}

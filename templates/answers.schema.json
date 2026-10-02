@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "antco-skills/answers.schema.json",
+  "title": "Câu trả lời form câu hỏi Antco",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_slug", "source_file", "source_revision", "source_sha256", "submission_id", "submitted_at", "answers"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "project_slug": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,60}$" },
+    "source_file": { "type": "string", "pattern": "^[^/\\\\]+\\.md$" },
+    "source_revision": { "type": "string", "pattern": "^v[0-9]+$" },
+    "source_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "submission_id": { "type": "string", "pattern": "^s[0-9a-z]{6,}-[0-9a-z]{4,}$" },
+    "submitted_at": { "type": "string", "format": "date-time" },
+    "answers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["question_id", "request_ids"],
+        "properties": {
+          "question_id": { "type": "string", "pattern": "^Q-[0-9]{3,}$" },
+          "request_ids": { "type": "array", "items": { "type": "string", "pattern": "^REQ-[0-9]{3,}$" } },
+          "choice": { "type": "string", "maxLength": 5000 },
+          "answer": { "type": "string", "maxLength": 5000 }
+        }
+      }
+    }
+  }
+}

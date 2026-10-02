@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Câu hỏi làm rõ yêu cầu - Antco</title>
+<style>
+  :root { --bg: #f7f7fb; --card: #ffffff; --text: #1f2330; --muted: #5d6475; --line: #e3e5ee; --accent: #5B4CFF; --warn: #b45309; --warn-bg: #fff7ed; --ok: #047857; --input: #ffffff; }
+  :root[data-theme="dark"] { --bg: #14161d; --card: #1d2029; --text: #e8eaf2; --muted: #a2a8b8; --line: #2e3240; --accent: #8f85ff; --warn: #fbbf24; --warn-bg: #2a2214; --ok: #34d399; --input: #252936; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #14161d; --card: #1d2029; --text: #e8eaf2; --muted: #a2a8b8; --line: #2e3240; --accent: #8f85ff; --warn: #fbbf24; --warn-bg: #2a2214; --ok: #34d399; --input: #252936; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 Inter, "Segoe UI", system-ui, sans-serif; }
+  main { max-width: 920px; margin: 0 auto; padding: 24px 16px 96px; }
+  header { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 17px; margin: 28px 0 10px; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 12px 0; }
+  .qhead { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 6px; }
+  .qid { font-weight: 700; }
+  .badge { font-size: 13px; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+  .badge.block { color: var(--warn); background: var(--warn-bg); border-color: transparent; font-weight: 600; }
+  .qtext { font-weight: 600; margin: 4px 0 10px; white-space: pre-wrap; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .opts label { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+  textarea { width: 100%; min-height: 72px; resize: vertical; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--input); color: var(--text); font: inherit; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 13px; }
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line); padding: 10px 16px; }
+  .bar .in { max-width: 920px; margin: 0 auto; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  button { font: inherit; border-radius: 8px; padding: 8px 14px; border: 1px solid var(--line); background: var(--card); color: var(--text); cursor: pointer; }
+  button.primary { background: var(--accent); color: #fff; border-color: transparent; font-weight: 600; }
+  #status { color: var(--muted); font-size: 14px; }
+  #status.ok { color: var(--ok); }
+  #status.warn { color: var(--warn); }
+  .done { opacity: .7; }
+  .empty { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1 id="title">Câu hỏi làm rõ yêu cầu</h1>
+      <div class="meta" id="meta"></div>
+    </div>
+    <button type="button" id="theme" aria-label="Đổi giao diện sáng tối">Sáng / Tối</button>
+  </header>
+  <div class="card" id="guide">
+    Trả lời các câu hỏi bên dưới (câu có nhãn <strong>Cần trả lời</strong> là bắt buộc), bấm <strong>Lưu câu trả lời</strong>, lưu file JSON vào thư mục <code>answers/</code> của dự án rồi nhắn <strong>"đã trả lời"</strong> cho trợ lý. Lưu câu trả lời <strong>không</strong> phải là phê duyệt. Trang này không gửi dữ liệu đi đâu.
+  </div>
+  <h2>Câu hỏi</h2>
+  <div id="questions"></div>
+  <h2>Yêu cầu liên quan</h2>
+  <div class="card"><table><thead><tr><th>ID</th><th>Yêu cầu</th><th>Hướng xử lý</th><th>Trạng thái</th></tr></thead><tbody id="reqs"></tbody></table></div>
+</main>
+<div class="bar"><div class="in">
+  <button type="button" class="primary" id="save">Lưu câu trả lời</button>
+  <span id="status"></span>
+</div></div>
+
+<script type="application/json" id="antco-form-data">{"project_slug":"pcs-khao-sat","title":"Khảo sát hiện trường và phương án kỹ thuật - Công ty diệt côn trùng PCS (ví dụ)","source_file":"yeu-cau-giai-phap-v1.md","source_revision":"v1","source_sha256":"e4c5ede209fbf8db05b7ef86022d566fc1c2cd377c32643cbc7e58ca09a6be81","requirements":[{"id":"REQ-001","text":"Lập phiếu khảo sát cho khách hàng: khách, địa chỉ, ngày khảo sát, kỹ thuật viên phụ trách, loại cơ sở, trạng thái","disposition":"TAO_MOI","clarity":"DA_RO"},{"id":"REQ-002","text":"Ghi nhận từng khu vực khảo sát: khu vực, loại côn trùng, mức độ nhiễm, diện tích","disposition":"TAO_MOI","clarity":"CAN_LAM_RO"},{"id":"REQ-003","text":"Lập phương án kỹ thuật từ phiếu: phương pháp xử lý, tần suất, giá trị dự kiến","disposition":"TAO_MOI","clarity":"CAN_LAM_RO"},{"id":"REQ-004","text":"Phương án phải được duyệt trước khi gửi khách; từ chối phải ghi lý do","disposition":"TAO_MOI","clarity":"CAN_LAM_RO"},{"id":"REQ-005","text":"Quản lý xem số phiếu theo tháng và trạng thái, tổng giá trị phương án","disposition":"TAO_MOI","clarity":"DA_RO"},{"id":"REQ-006","text":"Mỗi kỹ thuật viên có danh sách \"Phiếu của tôi đang mở\"","disposition":"CAU_HINH","clarity":"DA_RO"},{"id":"REQ-007","text":"Tự động gửi phương án đã duyệt qua email cho khách","disposition":"NGOAI_PHAM_VI","clarity":"NGOAI_PHAM_VI"}],"questions":[{"id":"Q-001","req_ids":["REQ-002"],"text":"Mức độ nhiễm côn trùng chia mấy mức?","options":["3 mức: Thấp, Trung bình, Cao","4 mức: thêm Nghiêm trọng","Khác (ghi rõ)"],"level":"BLOCKING","state":"MO","answer":"-"},{"id":"Q-002","req_ids":["REQ-004"],"text":"Ai duyệt phương án kỹ thuật trước khi gửi khách?","options":["Trưởng nhóm kỹ thuật","Giám đốc kỹ thuật","Không cần duyệt"],"level":"BLOCKING","state":"MO","answer":"-"},{"id":"Q-003","req_ids":["REQ-003"],"text":"Một phiếu khảo sát có thể có nhiều phương án (để khách chọn) không?","options":["Chỉ 1 phương án","Nhiều phương án (khách chọn 1)"],"level":"BLOCKING","state":"MO","answer":"-"},{"id":"Q-004","req_ids":["REQ-005"],"text":"Có tạo dữ liệu demo (phiếu, khu vực, phương án giả lập, gắn nhãn, dọn được) để chạy thử không? Nếu có, cho biết 2-3 khách hàng có sẵn để gắn vào phiếu demo.","options":["Có, khoảng 8 phiếu","Không"],"level":"NON_BLOCKING","state":"MO","answer":"-"},{"id":"Q-005","req_ids":["REQ-001"],"text":"Antco đã có \"Yêu cầu khảo sát hiện trường\" (đặt lịch). Phiếu khảo sát mới có cần liên kết tới yêu cầu đó ngay không?","options":["Chưa cần","Có, liên kết bắt buộc"],"level":"NON_BLOCKING","state":"MO","answer":"-"}]}</script>
+<script>
+(function () {
+  'use strict'
+  var DISP = { DUNG_SAN: 'Dùng sẵn có', CAU_HINH: 'Cấu hình', MO_RONG: 'Mở rộng', TAO_MOI: 'Tạo mới', NGOAI_PHAM_VI: 'Ngoài phạm vi', CHUA_HO_TRO: 'Chưa hỗ trợ', CHUA_RO: 'Chưa rõ' }
+  var CLAR = { CAN_LAM_RO: 'Cần làm rõ', DA_RO: 'Đã rõ', NGOAI_PHAM_VI: 'Ngoài phạm vi' }
+  var $ = function (id) { return document.getElementById(id) }
+  var el = function (tag, text, cls) { var e = document.createElement(tag); if (text != null) e.textContent = String(text); if (cls) e.className = cls; return e }
+  var store = { get: function (k) { try { return localStorage.getItem(k) } catch (e) { return null } }, set: function (k, v) { try { localStorage.setItem(k, v) } catch (e) {} } }
+  var status = function (msg, kind) { var s = $('status'); s.textContent = msg; s.className = kind || '' }
+
+  var theme = store.get('antco-form-theme')
+  if (theme) document.documentElement.setAttribute('data-theme', theme)
+  $('theme').addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    var next = cur === 'dark' ? 'light' : 'dark'
+    document.documentElement.setAttribute('data-theme', next); store.set('antco-form-theme', next)
+  })
+
+  var data = null
+  try { data = JSON.parse($('antco-form-data').textContent) } catch (e) { data = null }
+  if (!data || !data.project_slug || !Array.isArray(data.questions)) {
+    $('questions').appendChild(el('p', 'Đây là file mẫu chưa có dữ liệu. Sinh form bằng: node render_questions_form.mjs <yeu-cau-giai-phap-vN.md>', 'empty'))
+    $('save').disabled = true
+    return
+  }
+
+  $('title').textContent = 'Câu hỏi làm rõ - ' + (data.title || data.project_slug)
+  $('meta').textContent = 'Dự án ' + data.project_slug + ' · ' + data.source_file + ' · ' + data.source_revision + ' · SHA-256 ' + String(data.source_sha256).slice(0, 12) + '…'
+
+  var draftKey = 'antco-answers:' + data.project_slug + ':' + data.source_revision + ':' + data.source_sha256
+  var draft = {}
+  try { draft = JSON.parse(store.get(draftKey) || '{}') || {} } catch (e) { draft = {} }
+  var saveDraft = function () { store.set(draftKey, JSON.stringify(draft)) }
+
+  var open = data.questions.filter(function (q) { return q.state === 'MO' })
+  var closed = data.questions.filter(function (q) { return q.state !== 'MO' })
+  var qBox = $('questions')
+  if (!open.length) qBox.appendChild(el('p', 'Không còn câu hỏi đang mở.', 'empty'))
+
+  open.forEach(function (q) {
+    var d = draft[q.id] || { choice: '', answer: '' }
+    var card = el('div', null, 'card')
+    var head = el('div', null, 'qhead')
+    head.appendChild(el('span', q.id, 'qid'))
+    head.appendChild(el('span', q.level === 'BLOCKING' ? 'Cần trả lời' : 'Không bắt buộc', 'badge' + (q.level === 'BLOCKING' ? ' block' : '')))
+    if (q.req_ids.length) head.appendChild(el('span', q.req_ids.join(', '), 'badge'))
+    card.appendChild(head)
+    card.appendChild(el('div', q.text, 'qtext'))
+    if (q.options.length) {
+      var opts = el('div', null, 'opts')
+      q.options.forEach(function (opt, i) {
+        var lab = el('label')
+        var r = document.createElement('input')
+        r.type = 'radio'; r.name = 'opt-' + q.id; r.value = opt; r.id = 'opt-' + q.id + '-' + i
+        if (d.choice === opt) r.checked = true
+        r.addEventListener('change', function () { draft[q.id] = draft[q.id] || {}; draft[q.id].choice = opt; saveDraft() })
+        lab.appendChild(r); lab.appendChild(el('span', opt))
+        opts.appendChild(lab)
+      })
+      card.appendChild(opts)
+    }
+    var ta = document.createElement('textarea')
+    ta.placeholder = q.options.length ? 'Ghi thêm (tuỳ chọn)' : 'Câu trả lời của bạn'
+    ta.value = d.answer || ''
+    ta.maxLength = 5000
+    ta.setAttribute('aria-label', 'Trả lời ' + q.id)
+    ta.addEventListener('input', function () { draft[q.id] = draft[q.id] || {}; draft[q.id].answer = ta.value; saveDraft() })
+    card.appendChild(ta)
+    qBox.appendChild(card)
+  })
+  closed.forEach(function (q) {
+    var card = el('div', null, 'card done')
+    var head = el('div', null, 'qhead')
+    head.appendChild(el('span', q.id, 'qid'))
+    head.appendChild(el('span', q.state === 'DA_TRA_LOI' ? 'Đã trả lời' : 'Bỏ qua', 'badge'))
+    card.appendChild(head)
+    card.appendChild(el('div', q.text, 'qtext'))
+    if (q.answer && q.answer !== '-') card.appendChild(el('div', 'Trả lời: ' + q.answer))
+    qBox.appendChild(card)
+  })
+
+  var tb = $('reqs')
+  data.requirements.forEach(function (r) {
+    var tr = el('tr')
+    tr.appendChild(el('td', r.id)); tr.appendChild(el('td', r.text))
+    tr.appendChild(el('td', DISP[r.disposition] || r.disposition)); tr.appendChild(el('td', CLAR[r.clarity] || r.clarity))
+    tb.appendChild(tr)
+  })
+
+  var isoLocal = function (dt) {
+    var off = -dt.getTimezoneOffset(); var sign = off >= 0 ? '+' : '-'; var a = Math.abs(off)
+    var p = function (n) { return String(n).padStart(2, '0') }
+    return dt.getFullYear() + '-' + p(dt.getMonth() + 1) + '-' + p(dt.getDate()) + 'T' + p(dt.getHours()) + ':' + p(dt.getMinutes()) + ':' + p(dt.getSeconds()) + sign + p(Math.floor(a / 60)) + ':' + p(a % 60)
+  }
+  var rand = function () { var b = new Uint8Array(6); crypto.getRandomValues(b); return Array.prototype.map.call(b, function (x) { return (x % 36).toString(36) }).join('') }
+
+  $('save').addEventListener('click', function () {
+    var answers = []
+    var missing = []
+    open.forEach(function (q) {
+      var d = draft[q.id] || {}
+      var choice = (d.choice || '').trim(); var answer = (d.answer || '').trim()
+      if (!choice && !answer) { if (q.level === 'BLOCKING') missing.push(q.id); return }
+      var item = { question_id: q.id, request_ids: q.req_ids.slice() }
+      if (choice) item.choice = choice
+      if (answer) item.answer = answer
+      answers.push(item)
+    })
+    if (missing.length && !confirm('Còn câu cần trả lời: ' + missing.join(', ') + '. Vẫn lưu bản chưa đủ?')) { status('Chưa lưu - còn ' + missing.length + ' câu cần trả lời.', 'warn'); return }
+    var sub = 's' + Date.now().toString(36) + '-' + rand()
+    var out = { schema_version: 1, project_slug: data.project_slug, source_file: data.source_file, source_revision: data.source_revision, source_sha256: data.source_sha256, submission_id: sub, submitted_at: isoLocal(new Date()), answers: answers }
+    var name = 'answers-' + data.project_slug + '-' + data.source_revision + '-' + sub + '.json'
+    var json = JSON.stringify(out, null, 2) + '\n'
+    var fallback = function () {
+      var url = URL.createObjectURL(new Blob([json], { type: 'application/json' }))
+      var a = document.createElement('a'); a.href = url; a.download = name
+      document.body.appendChild(a); a.click(); a.remove()
+      setTimeout(function () { URL.revokeObjectURL(url) }, 2000)
+      status('Đã tải xuống ' + name + ' - chuyển file vào thư mục answers/ rồi nhắn "đã trả lời".', 'ok')
+    }
+    if (window.showSaveFilePicker) {
+      window.showSaveFilePicker({ suggestedName: name, types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }] })
+        .then(function (h) { return h.createWritable().then(function (w) { return w.write(json).then(function () { return w.close() }) }) })
+        .then(function () { status('Đã lưu ' + name + '. Đặt file trong thư mục answers/ rồi nhắn "đã trả lời".', 'ok') })
+        .catch(function (e) { if (e && e.name === 'AbortError') status('Đã huỷ lưu - câu trả lời vẫn còn trên trang.', 'warn'); else fallback() })
+    } else fallback()
+  })
+})()
+</script>
+</body>
+</html>

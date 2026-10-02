@@ -1,0 +1,6 @@
+interface:
+  display_name: "Build Antco App"
+  short_description: "Dựng ứng dụng nghiệp vụ trên Antco ERP từ mô tả, có 2 cổng duyệt"
+  default_prompt: "Dùng $build-antco-app để kiểm token Antco, khảo sát chỉ đọc, làm rõ yêu cầu, thiết kế và triển khai qua 2 cổng duyệt."
+policy:
+  allow_implicit_invocation: true
