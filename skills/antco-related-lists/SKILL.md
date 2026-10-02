@@ -14,7 +14,7 @@ metadata:
 
 ## Khái niệm
 
-- Antco **tự dò** danh sách liên quan: mọi đối tượng có trường Tra cứu (thường hoặc phụ thuộc, một giá trị) trỏ về đối tượng này. Khoá = `<ref nguồn>.<slug trường tra cứu>` (VD `cobj:khu_vuc_khao_sat.phieu_khao_sat`).
+- Antco **tự dò** danh sách liên quan: mọi đối tượng có trường Tra cứu (thường hoặc phụ thuộc, một giá trị) trỏ về đối tượng này. Khoá = `<ref nguồn>|<slug trường tra cứu>` (VD `cobj:khu_vuc_khao_sat|phieu_khao_sat`; trong URL mã hoá `:` = `%3A`, `|` = `%7C`).
 - Không "tạo" danh sách liên quan trực tiếp: tạo **trường tra cứu** ở đối tượng nguồn (`antco-fields`) hoặc đối tượng Con (`antco-objects`), rồi cấu hình ở đây.
 - Mặc định: đối tượng có sẵn = **Ẩn**; đối tượng tự tạo = **Hiện**. Danh sách từ đối tượng tự tạo cho thêm / sửa dòng ngay trên trang cha.
 
@@ -31,7 +31,7 @@ metadata:
 | PUT | `/api/public/v1/objects/{ref}/related-lists/order?dryRun=1` - `{ "keys": [...] }` (khoá không gửi xếp sau cùng) |
 
 ```json
-PUT /api/public/v1/objects/cobj%3Aphieu_khao_sat/related-lists/cobj%3Akhu_vuc_khao_sat.phieu_khao_sat?dryRun=1
+PUT /api/public/v1/objects/cobj%3Aphieu_khao_sat/related-lists/cobj%3Akhu_vuc_khao_sat%7Cphieu_khao_sat?dryRun=1
 {
   "label": "Khu vực khảo sát",
   "visibility": "visible",

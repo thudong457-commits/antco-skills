@@ -28,7 +28,7 @@ config { v: 2, page, rows[] }
 | `type` | Khoá | Ghi chú |
 |---|---|---|
 | `field` | `key` (slug trường tự thêm / key trường có sẵn), `label?`, `showLabel`, `readonly?`, `required?`, `labelPos` (`top`/`left`), `wide?`, `visible?` | `required` / `readonly` ở đây là ràng buộc **giao diện**; ràng buộc dữ liệu thật đặt ở trường |
-| `related` | `ref` (đối tượng nguồn), `link` (slug trường tra cứu ở nguồn), `label?`, `showLabel`, `allowAdd`, `readonly`, `hideEmpty`, `quickSearch`, `height`, `pageSize`, `filter?`, `sortField`, `sortDir`, `columns?` | lấy từ `GET /objects/{ref}/related-lists` (khoá dạng `<ref nguồn>.<link>`) |
+| `related` | `ref` (đối tượng nguồn), `link` (slug trường tra cứu ở nguồn), `label?`, `showLabel`, `allowAdd`, `readonly`, `hideEmpty`, `quickSearch`, `height`, `pageSize`, `filter?`, `sortField`, `sortDir`, `columns?` | lấy từ `GET /objects/{ref}/related-lists` (khoá dạng `<ref nguồn>|<link>`, URL-encode `|` = `%7C`) |
 | `display` | `name`, `text` (văn bản thuần <= 5000) | |
 | `widget` | `key` | khối đặc thù của trang có sẵn - chỉ dùng khoá có trong giao diện tiêu chuẩn / `data.target` |
 | `comp` | `kind`, `slug`, `name`, `showName`, `visible` + thuộc tính riêng | bảng dưới |
