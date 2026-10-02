@@ -60,7 +60,7 @@ ANTCO_API_KEY=<dán token vào đây, không có dấu nháy>
 Cách nhanh nhất - script cài đặt (chép skill + script dùng chung + mẫu vào đúng chỗ):
 
 ```bash
-git clone <url repo antco-skills> && cd antco-skills
+git clone https://github.com/thudong457-commits/antco-skills.git && cd antco-skills
 node scripts/install.mjs --target claude-user                 # ~/.claude/skills (mọi dự án)
 node scripts/install.mjs --target claude-project --project .. # <dự án>/.claude/skills
 node scripts/install.mjs --target codex-user                  # $CODEX_HOME/skills hoặc ~/.codex/skills
