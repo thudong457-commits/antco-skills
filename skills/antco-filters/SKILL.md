@@ -4,12 +4,12 @@ description: "Tạo và chia sẻ bộ lọc nâng cao (saved filter / view) cho
 license: MIT
 metadata:
   author: Antco
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Antco Filters (Bộ lọc nâng cao)
 
-- **Phiên bản:** `1.0.0` - **Ngày phát hành:** `2026-10-02`
+- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Toán tử + biến: [references/operators.md](references/operators.md).
 
 ## Khái niệm

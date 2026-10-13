@@ -4,12 +4,12 @@ description: "Đọc và tạo đối tượng Antco qua Public API: liệt kê 
 license: MIT
 metadata:
   author: Antco
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Antco Objects
 
-- **Phiên bản:** `1.0.0` - **Ngày phát hành:** `2026-10-02`
+- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực, phong bì, lỗi: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Endpoint: [../antco-api-auth/references/public-api-v1.md](../antco-api-auth/references/public-api-v1.md).
 
 ## Khi nào dùng
@@ -18,7 +18,7 @@ metadata:
 - Khảo sát đối tượng hiện có trước khi thiết kế (chỉ đọc).
 - Đổi tên / mô tả / ẩn nút tạo / bật tắt / cho phép báo cáo của **đối tượng tự tạo**.
 
-Không làm được qua Public API v1 (-> `CHUA_HO_TRO`, người dùng làm ở Cài đặt > Dữ liệu > Đối tượng): xoá đối tượng, sửa thông tin đối tượng có sẵn, Composite ID, theo dõi lịch sử, cấu hình AI.
+Không làm được qua Public API v1 (-> `CHUA_HO_TRO`, người dùng làm ở Cài đặt > Dữ liệu > Đối tượng): xoá đối tượng, sửa thông tin đối tượng có sẵn, Composite ID, cấu hình AI. Lịch sử thay đổi trường: [antco-history-tracking](../antco-history-tracking/SKILL.md).
 
 ## Quyền (người chạy API)
 

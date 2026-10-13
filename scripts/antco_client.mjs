@@ -6,7 +6,7 @@
 // - Không theo redirect, chỉ https (http chỉ cho localhost/127.0.0.1), không bao giờ in token.
 import { readFileSync, existsSync, writeFileSync } from 'node:fs'
 
-const VERSION = '1.0.0'
+const VERSION = '1.1.0'
 const API_PREFIX = '/api/public/v1'
 const WRITE_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE'])
 const EXIT = { OK: 0, USAGE: 2, CONFIG: 3, API: 4, NETWORK: 5 }

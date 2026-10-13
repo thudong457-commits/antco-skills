@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const version = readFileSync(join(root, 'VERSION'), 'utf8').trim()
-const SHARED_SCRIPTS = ['antco_client.mjs', 'validate_artifacts.mjs', 'render_questions_form.mjs']
+const SHARED_SCRIPTS = ['antco_client.mjs', 'validate_artifacts.mjs', 'render_questions_form.mjs', 'schema_workbook.mjs', 'xlsx_lite.mjs']
 const die = (m) => { process.stderr.write(`install: ${m}\n`); process.exit(2) }
 
 const argv = process.argv.slice(2)

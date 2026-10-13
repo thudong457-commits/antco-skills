@@ -4,12 +4,12 @@ description: "Quy tắc dùng chung khi gọi Antco Public API v1 (/api/public/v
 license: MIT
 metadata:
   author: Antco
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Antco API Auth (dùng chung)
 
-- **Phiên bản:** `1.0.0` - **Ngày phát hành:** `2026-10-02` - Hợp đồng API: Antco Public API v1 `1.0.0`
+- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13` - Hợp đồng API: Antco Public API v1 `1.0.0`
 - Mọi skill `antco-*` dẫn về file này. Danh mục endpoint: [references/public-api-v1.md](references/public-api-v1.md). Mã lỗi: [references/errors.md](references/errors.md).
 
 ## 1. Credential (chỉ 2 biến)

@@ -4,12 +4,12 @@ description: "Đọc và ghi bản ghi Antco qua Public API (/records/{ref}): đ
 license: MIT
 metadata:
   author: Antco
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Antco Records & Demo Data
 
-- **Phiên bản:** `1.0.0` - **Ngày phát hành:** `2026-10-02`
+- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Kịch bản demo: [references/demo-data.md](references/demo-data.md). Giá trị theo kiểu trường: [../antco-fields/references/field-types.md](../antco-fields/references/field-types.md). Điều kiện lọc: [../antco-filters/references/operators.md](../antco-filters/references/operators.md).
 
 ## Luật cứng

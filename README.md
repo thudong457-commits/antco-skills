@@ -23,6 +23,13 @@ Bộ **Agent Skills** (thư mục `SKILL.md`) giúp Claude Code, Codex và các 
 | [`antco-filters`](skills/antco-filters/SKILL.md) | Bộ lọc nâng cao, chia sẻ, cột, Kanban / Lịch |
 | [`antco-related-lists`](skills/antco-related-lists/SKILL.md) | Danh sách liên quan trên trang bản ghi |
 | [`antco-reports`](skills/antco-reports/SKILL.md) | Loại báo cáo, báo cáo, bảng điều khiển + biểu đồ |
+| [`antco-schema-workbook`](skills/antco-schema-workbook/SKILL.md) | Thiết kế đối tượng + trường bằng workbook Excel, tạo hàng loạt theo thứ tự phụ thuộc |
+| [`antco-history-tracking`](skills/antco-history-tracking/SKILL.md) | Lịch sử thay đổi trường |
+| [`antco-app-menus`](skills/antco-app-menus/SKILL.md) | Menu ứng dụng từng phân hệ |
+| [`antco-processes`](skills/antco-processes/SKILL.md) | Quy trình / phê duyệt: sơ đồ, xuất bản, chạy thử end-to-end |
+| [`antco-ai-agents`](skills/antco-ai-agents/SKILL.md) | AI Agent, kỹ năng, công cụ, Data library, chat thử |
+| [`antco-document-templates`](skills/antco-document-templates/SKILL.md) | Mẫu văn bản HTML / Word / Excel cho mọi đối tượng |
+| [`antco-access`](skills/antco-access/SKILL.md) | Phòng ban, chức vụ, vai trò, cấp quyền (có chốt chống leo thang) |
 
 Kèm theo: `templates/` (form câu hỏi HTML offline, mẫu Markdown yêu cầu / thiết kế / kế hoạch / bàn giao, JSON schema câu trả lời và manifest), `scripts/` (Node.js, không thư viện ngoài), `examples/pcs-khao-sat/` (một dự án mẫu đầy đủ, dữ liệu tổng hợp).
 

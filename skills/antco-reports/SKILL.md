@@ -4,12 +4,12 @@ description: "Xây báo cáo Antco qua Public API: loại báo cáo (tập dữ 
 license: MIT
 metadata:
   author: Antco
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Antco Reports & Dashboards
 
-- **Phiên bản:** `1.0.0` - **Ngày phát hành:** `2026-10-02`
+- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Biểu đồ + dashboard: [references/charts.md](references/charts.md). Điều kiện: [../antco-filters/references/operators.md](../antco-filters/references/operators.md).
 
 ## Mô hình

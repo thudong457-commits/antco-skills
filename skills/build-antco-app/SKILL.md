@@ -4,14 +4,14 @@ description: "Điều phối dựng hoặc tuỳ biến cả một ứng dụng 
 license: MIT
 metadata:
   author: Antco
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Build Antco App (điều phối)
 
-- **Phiên bản:** `1.0.0` - **Ngày phát hành:** `2026-10-02`
+- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
 - Tham chiếu: [references/artifact-contracts.md](references/artifact-contracts.md) (mẫu bảng, ID, enum - validator kiểm đúng theo file này), [references/gates-and-safety.md](references/gates-and-safety.md), [references/questions-form.md](references/questions-form.md), [references/execution.md](references/execution.md).
-- Skill dùng chung: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md), [../antco-overview/SKILL.md](../antco-overview/SKILL.md).
+- Skill dùng chung: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md), [../antco-overview/SKILL.md](../antco-overview/SKILL.md). Từ 1.1.0 thêm: [antco-schema-workbook](../antco-schema-workbook/SKILL.md) (tạo hàng loạt đối tượng / trường, duyệt thiết kế bằng Excel), [antco-processes](../antco-processes/SKILL.md), [antco-ai-agents](../antco-ai-agents/SKILL.md), [antco-document-templates](../antco-document-templates/SKILL.md), [antco-access](../antco-access/SKILL.md), [antco-app-menus](../antco-app-menus/SKILL.md), [antco-history-tracking](../antco-history-tracking/SKILL.md).
 - Script (sau khi cài nằm ở `../antco-api-auth/scripts/`; chạy từ repo thì ở `scripts/`): `antco_client.mjs`, `validate_artifacts.mjs`, `render_questions_form.mjs`. Mẫu: `../build-antco-app/templates/` (repo: `templates/`).
 
 ## Vai trò

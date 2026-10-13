@@ -2,6 +2,27 @@
 
 Theo [Semantic Versioning](https://semver.org/). Ngày theo giờ Việt Nam (UTC+7).
 
+## [1.1.0] - 2026-10-13
+
+Theo hợp đồng **Antco Public API v1** mở rộng lên 139 endpoint.
+
+### Thêm
+
+- 7 skill: `antco-schema-workbook` (workbook Excel thiết kế dữ liệu; script `schema_workbook.mjs` + `xlsx_lite.mjs` đọc / ghi .xlsx không thư viện: template, export, import, validate, plan, apply có dryRun từng bước và chạy tiếp từ `plan.state.json`),
+  `antco-history-tracking`, `antco-app-menus`, `antco-processes` (kèm `references/nodes.md`), `antco-ai-agents`, `antco-document-templates` (mọi đối tượng), `antco-access`.
+- Hợp đồng rút gọn `public-api-v1.md`: nhóm endpoint lịch sử thay đổi, menu ứng dụng, AI Agent, mẫu văn bản, quy trình, tổ chức + phân quyền; danh sách cấm mới (mở vai trò / cấp quyền có chốt chống leo thang; tài khoản người dùng chỉ đọc).
+
+### Đổi
+
+- `antco-overview`, `build-antco-app`, `antco-objects`, `antco-fields`, `antco-rules`: trỏ sang skill mới thay cho ghi chú "chưa hỗ trợ".
+
+### Sửa (sau khi thử thật bằng token)
+
+- `schema_workbook.mjs`: JSON viết tay dạng phẳng (`namePrefix` / `nameDigits`, `lookup` / `formula`... ở cấp trường) được chuyển sang dạng chuẩn - trước đây báo lỗi số chữ số và mất tiền tố khi xuất Excel.
+- `antco-processes`: kiểm người duyệt qua `tasks[].assigneeName` (không có `performers`); "Hàng chờ chung" = không tìm ra người duyệt.
+- `antco-access`: mã quyền không có trong danh mục bị bỏ qua không báo lỗi - đối chiếu `added`.
+- `antco-schema-workbook`: ghi chú `MSYS_NO_PATHCONV=1` cho Git Bash.
+
 ## [1.0.0] - 2026-10-02
 
 Phát hành đầu tiên, dựng theo hợp đồng **Antco Public API v1 `1.0.0`** (65 endpoint).

@@ -1,6 +1,6 @@
 # Antco Public API v1 - hợp đồng rút gọn cho agent
 
-- **Nguồn chuẩn:** `GET {ANTCO_BASE_URL}/api/public/v1/openapi.json` (OpenAPI 3.0, cần token, trả thẳng không bọc phong bì). File này là bản viết lại gọn của hợp đồng `1.0.0` (65 endpoint, ngày 2026-10-02) để agent tra nhanh. **Khác OpenAPI thì OpenAPI thắng** - ghi chú khác biệt cho người dùng.
+- **Nguồn chuẩn:** `GET {ANTCO_BASE_URL}/api/public/v1/openapi.json` (OpenAPI 3.0, cần token, trả thẳng không bọc phong bì). File này là bản viết lại gọn của hợp đồng `1.0.0` (139 endpoint, cập nhật 2026-10-13 - thêm lịch sử thay đổi, menu ứng dụng, AI Agent, mẫu văn bản, quy trình, tổ chức + phân quyền) để agent tra nhanh. **Khác OpenAPI thì OpenAPI thắng** - ghi chú khác biệt cho người dùng.
 - Tiền tố mọi đường dẫn: `${ANTCO_BASE_URL}/api/public/v1`.
 
 ## 1. Xác thực
@@ -12,9 +12,10 @@
 
 ## 2. Bị cấm với token
 
-- Đường dẫn chứa: `api-tokens`, `tokens`, `users`, `auth`, `login`, `password`, `2fa`, `roles`, `user-roles`, `user-access`, `permissions`, `role-rules`, `payments`, `billing`, `subscriptions`, `secrets`, `integrations`, `email-providers`, `workspace-configs`, `devices` -> `403 FORBIDDEN_ENDPOINT`.
-- Quyền không dùng được qua token (kể cả quản trị): `settings:api_tokens`, `settings:users`, `settings:roles`, `settings:user_roles`, `settings:role_rules`, `settings:security`, `settings:general`, `settings:email`, `workflow:secrets`, `crm:call_config`, `mkt:sms:config`, `mkt:ads`, `omni:channels`, `omni:personal-channels`; thanh toán (`finance:payment_requests`, `finance:payables`) chỉ xem -> `403 FORBIDDEN`.
-- Không có endpoint tạo tài khoản, đổi mật khẩu, gán vai trò / quyền, thanh toán, cấu hình bí mật.
+- Đường dẫn chứa: `api-tokens`, `tokens`, `auth`, `login`, `password`, `2fa`, `super-admin`, `user-access`, `role-rules`, `payments`, `billing`, `subscriptions`, `secrets`, `integrations`, `email-providers`, `workspace-configs`, `devices` -> `403 FORBIDDEN_ENDPOINT`.
+- Quyền không dùng được qua token (kể cả quản trị): `settings:api_tokens`, `settings:role_rules`, `settings:security`, `settings:general`, `settings:email`, `settings:scripts`, `workflow:secrets`, `crm:call_config`, `mkt:sms:config`, `mkt:ads`, `omni:channels`, `omni:personal-channels`. CHỈ XEM: thanh toán (`finance:payment_requests`, `finance:payables`) và tài khoản người dùng (`settings:users`) -> `403 FORBIDDEN`.
+- Từ 2026-10-13 MỞ qua token (người dùng duyệt): vai trò + bộ mã quyền (`settings:roles`), vai trò kiêm nhiệm / quyền tạm thời (`settings:user_roles`) - máy chủ chặn tự cấp, chặn Toàn quyền, chỉ cấp mã / phạm vi người chạy đang có (skill antco-access).
+- Không có endpoint tạo / sửa tài khoản, đổi mật khẩu, gán Toàn quyền, thanh toán, kho bí mật, khoá nhà cung cấp AI, bí mật công cụ HTTP.
 
 ## 3. Phong bì, lỗi, giới hạn
 
@@ -120,6 +121,62 @@ Cột "dryRun" = nhận `?dryRun=1`. Cột "Lượt" = loại mục ghi vào lư
 | PUT | `/dashboards/{id}` (khoá gửi lên) | `settings:dashboards:write` | có | dashboard |
 | POST | `/dashboards/{id}/data` | `settings:dashboards:read` | - | - |
 
+### Lịch sử thay đổi, menu ứng dụng (skill antco-history-tracking, antco-app-menus)
+
+| Method | Đường dẫn | Quyền | dryRun | Lượt |
+|---|---|---|---|---|
+| GET / PUT | `/objects/{ref}/tracking` (PUT `{ keys[] }` thay toàn bộ, <= 20) | read / write | PUT có | tracking |
+| GET | `/records/{ref}/{id}/history` | quyền xem đối tượng + bản ghi trong phạm vi | - | - |
+| GET | `/app-menus` | `settings:app_menus:read` | - | - |
+| PUT | `/app-menus/{key}` (`{ items[] }` thay toàn bộ, hoặc `{ reset: true }`) | `settings:app_menus:write` | có | app_menu |
+
+### AI Agent (skill antco-ai-agents) - tiền tố `/ai`
+
+| Method | Đường dẫn | Quyền | dryRun | Lượt |
+|---|---|---|---|---|
+| GET | `/ai/models`, `/ai/tool-catalog` | `ai:agents:read` / `ai:tools:read` | - | - |
+| GET / POST, GET / PUT | `/ai/agents`, `/ai/agents/{id}` (PUT thay toàn bộ) | `ai:agents:read` / `ai:agents:write` | ghi có | ai_agent |
+| POST | `/ai/agents/{id}/status` `{ active }` | `ai:agents:write` | có | ai_agent |
+| GET / POST, GET / PUT | `/ai/skills`, `/ai/tools`, `/ai/libraries` (+ `/{id}`) | `ai:skills` / `ai:tools` / `ai:library` | ghi có | ai_skill / ai_tool / ai_library |
+| POST | `/ai/libraries/{id}/documents` (base64) | `ai:library:write` | có (chỉ kiểm) | ai_document |
+| POST | `/ai/documents/{id}/action` `{ action }` | `ai:library:write` (+ `ai:library:approve`) | - | - |
+| POST / GET | `/ai/conversations/messages`, `/ai/conversations/{id}?after=` | `ai:chat:read` | - | - |
+| POST | `/ai/conversations/{id}/approvals/{approvalId}` `{ approved }` | `ai:chat:read` | - | - |
+
+### Mẫu văn bản (skill antco-document-templates) - tiền tố `/document-templates`
+
+| Method | Đường dẫn | Quyền | dryRun | Lượt |
+|---|---|---|---|---|
+| GET | `/objects`, `/objects/{ref}` | `settings:document_templates:read` | - | - |
+| GET / POST | `/` (`?objectRef=`) | read / write | POST có | document_template |
+| GET / PUT / DELETE | `/{id}` | read / write / delete | ghi có | document_template |
+| PUT | `/{id}/file` (base64 .docx / .xlsx) | write | có | document_template |
+| POST | `/{id}/render` `{ recordId? }` | write (+ quyền xem bản ghi) | - | - |
+
+### Quy trình (skill antco-processes)
+
+| Method | Đường dẫn | Quyền | dryRun | Lượt |
+|---|---|---|---|---|
+| GET / POST | `/processes` | `workflow:definitions:read` / `write` | POST có | process |
+| GET / PUT | `/processes/{id}` (PUT khoá gửi lên, `flowConfig` thay toàn bộ) | read / write | PUT có | process |
+| POST | `/processes/{id}/validate`, `/processes/{id}/publish` `{ publish }`, `/processes/{id}/status` `{ active }` | read / write / write | publish, status có | process |
+| GET | `/processes/{id}/versions` | read | - | - |
+| POST | `/processes/{id}/runs` `{ title }` | `workflow:executions:write` | - | - |
+| GET | `/process-lists/{object}`, `/process-runs/{id}` | `workflow:executions:read` (phạm vi) | - | - |
+| POST | `/process-runs/{id}/state`, `/process-tasks/{id}/approve`, `/process-tasks/{id}/reject` | `workflow:executions:read` + quyền trên lượt / bước | - | - |
+
+### Tổ chức + phân quyền (skill antco-access) - không có dryRun
+
+| Method | Đường dẫn | Quyền | Lượt |
+|---|---|---|---|
+| GET / POST, PUT | `/org/departments`, `/org/departments/{id}` | `settings:departments:read` / `write` | department |
+| GET / POST, PUT | `/org/positions`, `/org/positions/{id}` | `settings:positions:read` / `write` | position |
+| GET | `/org/users?q=` | `settings:users:read` | - |
+| GET | `/access/permissions`, `/access/roles`, `/access/roles/{id}/users` | `settings:roles:read` | - |
+| POST, PUT | `/access/roles`, `/access/roles/{id}`, `/access/roles/{id}/permissions` | `settings:roles:write` | role |
+| GET | `/access/grants` | `settings:user_roles:read` | - |
+| POST / DELETE | `/access/user-roles`, `/access/user-permissions` (+ `/{id}`) | `settings:user_roles:write` | grant |
+
 ## 7. Body chính (tóm tắt - ví dụ đầy đủ ở skill chuyên trách)
 
 | Endpoint | Khoá body |
@@ -149,9 +206,9 @@ Cột "dryRun" = nhận `?dryRun=1`. Cột "Lượt" = loại mục ghi vào lư
 ## 8. Không có trong v1 (ghi `CHUA_HO_TRO`, hướng dẫn người dùng làm trong Antco)
 
 - Xoá đối tượng, trường, giao diện, quy tắc, hành động, biểu mẫu (chỉ tắt bằng `isActive: false` qua PUT).
-- Ghi đè trường có sẵn (ẩn / đổi nhãn / bắt buộc), Composite ID, theo dõi lịch sử trường, cấu hình AI của đối tượng, sửa thông tin đối tượng có sẵn.
+- Ghi đè trường có sẵn (ẩn / đổi nhãn / bắt buộc), Composite ID, cấu hình AI của đối tượng, sửa thông tin đối tượng có sẵn.
 - Ghi bản ghi đối tượng có sẵn (CRM, Kho, Kế toán, Nhân sự...) - **chỉ đọc**.
-- Thư mục báo cáo, tải tệp / ảnh, danh sách nhân sự / phòng ban / vị trí / vai trò (id cho chia sẻ / gán: hỏi người dùng hoặc lấy từ bản ghi đọc được).
+- Thư mục báo cáo, tải tệp / ảnh vào bản ghi, xoá quy trình / agent / báo cáo / bảng điều khiển, tạo / sửa tài khoản người dùng.
 - Tạo hàng loạt bản ghi (gọi `POST /records/{ref}` từng bản ghi, tôn trọng 120 lần/phút).
 - Mọi thứ ở mục 2 (bị cấm với token).
 

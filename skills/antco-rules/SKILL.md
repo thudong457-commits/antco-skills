@@ -4,12 +4,12 @@ description: "Cấu hình quy tắc khai báo của đối tượng Antco qua Pu
 license: MIT
 metadata:
   author: Antco
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Antco Rules (quy tắc + lộ trình)
 
-- **Phiên bản:** `1.0.0` - **Ngày phát hành:** `2026-10-02`
+- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Payload từng loại: [references/rule-payloads.md](references/rule-payloads.md). Điều kiện dùng chung: [../antco-filters/references/operators.md](../antco-filters/references/operators.md).
 
 ## Chọn loại quy tắc
@@ -24,7 +24,7 @@ metadata:
 
 Ràng buộc dữ liệu luôn đúng (kể cả nhập qua API, nhập Excel) đặt ở **trường** (`required`, `unique`) hoặc quy tắc máy chủ; quy tắc giao diện chỉ là trải nghiệm nhập.
 
-Không có qua API (-> `CHUA_HO_TRO`): xoá quy tắc (chỉ `isActive: false`), theo dõi lịch sử trường, Composite ID.
+Không có qua API (-> `CHUA_HO_TRO`): xoá quy tắc (chỉ `isActive: false`), Composite ID. Theo dõi lịch sử trường: [antco-history-tracking](../antco-history-tracking/SKILL.md).
 
 ## Quyền
 

@@ -4,12 +4,12 @@ description: "Bản đồ Antco ERP cho agent: các phân hệ (CRM, Kế toán,
 license: MIT
 metadata:
   author: Antco
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Antco Overview
 
-- **Phiên bản:** `1.0.0` - **Ngày phát hành:** `2026-10-02`
+- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
 - Chỉ đọc, không gọi API ghi. Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md).
 
 ## 1. Antco là gì (theo góc nhìn tuỳ biến)
@@ -36,14 +36,21 @@ Bản đồ phân hệ và đối tượng tiêu biểu: [references/modules.md]
 | Danh sách giao diện | Giao diện kéo-thả v2, gán theo người/màn, thứ tự mặc định | `antco-layouts` |
 | Danh sách liên quan | Hiện/ẩn, nhãn, cột, tối thiểu/tối đa | `antco-related-lists` |
 | Hành động & Chuỗi hành động | Nút cập nhật / tạo / nhân bản / xoá / chuỗi | `antco-actions` |
-| Quy tắc giao diện / bảo mật / chuyển trạng thái / trùng lặp, Quản lý lộ trình, Lịch sử thay đổi | Quy tắc khai báo | `antco-rules` |
+| Quy tắc giao diện / bảo mật / chuyển trạng thái / trùng lặp, Quản lý lộ trình | Quy tắc khai báo | `antco-rules` |
+| Lịch sử thay đổi | Chọn trường ghi lịch sử, đọc lịch sử bản ghi | `antco-history-tracking` |
+| Nhiều đối tượng + trường một lần | Workbook Excel thiết kế dữ liệu -> tạo hàng loạt | `antco-schema-workbook` |
 | Biểu mẫu | Form web công khai `/f/<slug>` | `antco-forms` |
 | Cài đặt > Dữ liệu > Bộ lọc | Bộ lọc nâng cao lưu máy chủ, chia sẻ, cột, Kanban/Lịch | `antco-filters` |
 | Cài đặt > Báo cáo | Loại báo cáo, báo cáo, thư mục, bảng điều khiển | `antco-reports` |
 | Bản ghi | Đọc/ghi bản ghi, dữ liệu demo | `antco-records` |
+| Cài đặt > Ứng dụng & Menu | Menu trái từng phân hệ | `antco-app-menus` |
+| Quy trình / phê duyệt | Sơ đồ, xuất bản, chạy thử, hoàn thành bước | `antco-processes` |
+| AI Agent | Agent, kỹ năng, công cụ, Data library, chat thử | `antco-ai-agents` |
+| Mẫu văn bản | Mẫu HTML / Word / Excel cho mọi đối tượng, xuất thử | `antco-document-templates` |
+| Tổ chức + Phân quyền | Phòng ban, chức vụ, vai trò, cấp quyền kiêm nhiệm / tạm thời | `antco-access` |
 | Cả một ứng dụng từ mô tả nghiệp vụ | Điều phối toàn bộ, có 2 cổng duyệt | `build-antco-app` |
 
-**Không có qua API (không hứa với người dùng):** script/CSS tuỳ ý trên giao diện, hành động "Gọi API" ra ngoài, Federation component, cấp/sửa vai trò - phân quyền, tạo tài khoản người dùng, thanh toán, quy trình (workflow) - nếu `openapi.json` chưa có. Ghi `CHUA_HO_TRO` và đề xuất cách làm tay trong Antco.
+**Không có qua API (không hứa với người dùng):** script/CSS tuỳ ý trên giao diện, hành động "Gọi API" ra ngoài, Federation component, Custom Module / script sandbox, tạo / sửa tài khoản người dùng (cần mật khẩu), gán Toàn quyền, thanh toán, kho bí mật, khoá nhà cung cấp AI. Ghi `CHUA_HO_TRO` và đề xuất cách làm tay trong Antco.
 
 ## 3. Chọn skill
 

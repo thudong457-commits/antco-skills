@@ -4,12 +4,12 @@ description: "Thêm và sửa trường dữ liệu tự thêm của đối tư�
 license: MIT
 metadata:
   author: Antco
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Antco Fields
 
-- **Phiên bản:** `1.0.0` - **Ngày phát hành:** `2026-10-02`
+- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). 23 kiểu + cài đặt + định dạng giá trị: [references/field-types.md](references/field-types.md). Công thức / tổng hợp: [references/formula.md](references/formula.md).
 
 ## Khi nào dùng
@@ -17,7 +17,7 @@ metadata:
 - Thêm trường tự thêm vào đối tượng có sẵn (VD `crm:account`) hoặc tự tạo (`cobj:<slug>`).
 - Sửa nhãn, lựa chọn, cài đặt, bật / tắt (`isActive`) trường tự thêm.
 
-Không làm được qua API (-> `CHUA_HO_TRO`, người dùng làm ở Cài đặt > Dữ liệu > Đối tượng > Trường): ẩn / đổi nhãn / bắt buộc **trường có sẵn**, xoá trường, đổi kiểu trường, theo dõi lịch sử.
+Không làm được qua API (-> `CHUA_HO_TRO`, người dùng làm ở Cài đặt > Dữ liệu > Đối tượng > Trường): ẩn / đổi nhãn / bắt buộc **trường có sẵn**, xoá trường, đổi kiểu trường. Theo dõi lịch sử trường: [antco-history-tracking](../antco-history-tracking/SKILL.md). Tạo nhiều trường một lần: [antco-schema-workbook](../antco-schema-workbook/SKILL.md).
 
 ## Quyền
 
