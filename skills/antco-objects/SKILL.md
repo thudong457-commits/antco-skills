@@ -4,12 +4,12 @@ description: "Đọc và tạo đối tượng Antco qua Public API: liệt kê 
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco Objects
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực, phong bì, lỗi: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Endpoint: [../antco-api-auth/references/public-api-v1.md](../antco-api-auth/references/public-api-v1.md).
 
 ## Khi nào dùng

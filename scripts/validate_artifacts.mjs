@@ -361,7 +361,7 @@ function checkManifest (p, root, P) {
   if (d && (!Number.isInteger(d.count) || d.count < 0 || !Array.isArray(d.objects) || typeof d.cleaned !== 'boolean')) err(p, 'BAD_DEMO', 'demo_records cần {count:int>=0, objects:[], cleaned:boolean}')
   if (d && d.count > 0 && !m.run_id) err(p, 'DEMO_NO_RUN', 'có bản ghi demo thì phải có run_id')
   if (!m.validator || !['PASS', 'FAIL'].includes(m.validator.result)) err(p, 'BAD_VALIDATOR', 'validator.result phải PASS|FAIL')
-  const secretish = /antco_pat_[A-Za-z0-9_-]{8,}|"(api[_-]?key|token|password|secret)"\s*:/i
+  const secretish = /antco_(pat|ck)_[A-Za-z0-9_-]{8,}|"(api[_-]?key|token|password|secret)"\s*:/i
   if (secretish.test(text)) err(p, 'SECRET_IN_MANIFEST', 'manifest có dấu hiệu chứa token/khoá - xoá ngay')
 }
 

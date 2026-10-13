@@ -6,7 +6,7 @@
 ## 1. Xác thực
 
 - Token tạo ở **Cài đặt > Tích hợp > API Token** (quyền `settings:api_tokens:write`). Chọn "Chạy API dưới vai trò" = người dùng nội bộ đang hoạt động; token có **đúng quyền người đó** (nạp lại tối đa sau 60 giây khi quyền đổi). Giá trị token hiện **1 lần**; máy chủ chỉ lưu băm.
-- Định dạng `antco_pat_` + 40 ký tự. Header: `Authorization: Bearer <token>`, `Content-Type: application/json`. Biến phía agent: `ANTCO_BASE_URL`, `ANTCO_API_KEY` (file `.env` cục bộ đã gitignore).
+- Khoá kết nối `antco_ck_<base64url(origin)>_<40 ký tự>` (gộp địa chỉ công ty + token) hoặc token `antco_pat_` + 40 ký tự. Header: `Authorization: Bearer <khoá hoặc token>`, `Content-Type: application/json`; khoá của công ty khác địa chỉ đang gọi -> `401 WRONG_WORKSPACE`. Biến phía agent: `ANTCO_API_KEY` (+ `ANTCO_BASE_URL` chỉ khi dùng `antco_pat_`) trong file `.env` cục bộ đã gitignore.
 - Công ty xác định theo tên miền: token công ty A gửi tới tên miền công ty B -> `401 INVALID_TOKEN`. Token chỉ dùng cho `/api/public/v1/*`; không nhận cookie phiên.
 - Từ chối khi: sai / đã xoá (`401 INVALID_TOKEN`), vô hiệu (`401 TOKEN_INACTIVE`), hết hạn sau 23:59 giờ VN ngày hết hạn (`401 TOKEN_EXPIRED`), người chạy bị khoá / nghỉ / không nội bộ (`403 RUN_AS_USER_INACTIVE`), người chạy là quản trị chưa bật 2FA (`403 TWO_FACTOR_SETUP_REQUIRED`).
 

@@ -12,6 +12,7 @@ import { join, relative, basename } from 'node:path'
 // Các tiền tố được ghép chuỗi để chính file này không tự khớp mẫu.
 const RULES = [
   { id: 'ANTCO_TOKEN', re: new RegExp('antco' + '_pat_' + '[A-Za-z0-9_-]{8,}', 'g') },
+  { id: 'ANTCO_CONNECTION_KEY', re: new RegExp('antco' + '_ck_' + '[A-Za-z0-9_-]{4,}_[A-Za-z0-9]{40}', 'g') },
   { id: 'ANTCO_KEY_ASSIGN', re: /ANTCO_API_KEY\s*[=:]\s*["']?(?!["']?\s*$)(?!<)(?!\$\{?)([^\s"'#]{8,})/g },
   { id: 'PRIVATE_KEY', re: new RegExp('-----BEGIN [A-Z ]*' + 'PRIVATE KEY-----', 'g') },
   { id: 'JWT', re: /\beyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}/g },

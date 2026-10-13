@@ -4,12 +4,12 @@ description: "Tạo hành động (nút) và chuỗi hành động cho đối t�
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco Actions (Hành động & Chuỗi hành động)
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Đặt nút lên giao diện: [../antco-layouts/SKILL.md](../antco-layouts/SKILL.md).
 
 ## Phạm vi

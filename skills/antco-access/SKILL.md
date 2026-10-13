@@ -4,12 +4,12 @@ description: "Quản lý tổ chức và phân quyền Antco qua Public API: ph�
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco Access (tổ chức + phân quyền)
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Quyền dữ liệu từng bản ghi (chia sẻ theo điều kiện): quy tắc bảo mật ở [../antco-rules/SKILL.md](../antco-rules/SKILL.md).
 
 ## Chốt của máy chủ (không vượt được, kể cả người chạy là quản trị)

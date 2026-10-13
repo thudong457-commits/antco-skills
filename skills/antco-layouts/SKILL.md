@@ -4,12 +4,12 @@ description: "Tạo và sửa giao diện kéo-thả v2 của đối tượng An
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco Layouts (giao diện v2)
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Cây + giới hạn: [references/layout-v2-tree.md](references/layout-v2-tree.md). Ví dụ đầy đủ: [references/example-create-layout.json](references/example-create-layout.json).
 
 ## Khi nào dùng

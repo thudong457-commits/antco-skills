@@ -4,12 +4,12 @@ description: "Cấu hình và đọc lịch sử thay đổi trường của đ�
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco History Tracking (lịch sử thay đổi)
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md).
 
 ## Quyền

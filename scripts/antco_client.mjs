@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Antco Public API v1 - client tối giản cho agent (Node.js >= 18, không phụ thuộc thư viện).
-// - Đọc ANTCO_BASE_URL + ANTCO_API_KEY từ biến môi trường (hoặc --env <file .env> do người dùng chỉ định).
+// - Đọc ANTCO_API_KEY từ biến môi trường (hoặc --env <file .env> do người dùng chỉ định): Khoá kết nối antco_ck_... (đã gồm địa chỉ
+//   công ty) - hoặc token antco_pat_... kèm ANTCO_BASE_URL.
 // - GET chạy thật. POST/PUT/PATCH/DELETE mặc định chỉ IN request (đã che token); thêm --apply mới gửi.
 // - --server-dry-run: gửi thật kèm dryRun=1 (máy chủ chỉ kiểm, không ghi) - không cần --apply.
 // - Không theo redirect, chỉ https (http chỉ cho localhost/127.0.0.1), không bao giờ in token.
@@ -27,7 +28,7 @@ Tuỳ chọn:
   --apply                    Cho phép gửi thật lệnh ghi (POST/PUT/PATCH/DELETE)
   --server-dry-run           Gửi kèm dryRun=1 (máy chủ chỉ kiểm hợp lệ) - không cần --apply
   --run-id <id>              Header X-Antco-Run-Id (3-80 ký tự A-Z a-z 0-9 _ . : -; quy ước ar_yyyymmdd_xxxxxx)
-  --env <path>               Đọc ANTCO_BASE_URL / ANTCO_API_KEY từ file .env này (chỉ 2 khoá đó)
+  --env <path>               Đọc ANTCO_API_KEY (+ ANTCO_BASE_URL nếu có) từ file .env này (chỉ 2 khoá đó)
   --timeout <giây>           Mặc định 30
   --out <file>               Ghi body response ra file JSON
   --quiet                    Chỉ in body response
@@ -82,6 +83,17 @@ function loadEnvFile (file) {
   return out
 }
 
+/** Khoá kết nối 'antco_ck_' + base64url(origin) + '_' + 40 ký tự -> { origin, host, pat } (sai -> null) */
+function parseConnectionKey (raw) {
+  const m = /^antco_ck_([A-Za-z0-9_-]{4,400})_([A-Za-z0-9]{40})$/.exec(String(raw || ''))
+  if (!m) return null
+  try {
+    const u = new URL(Buffer.from(m[1].replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8'))
+    if (!/^https?:$/.test(u.protocol) || u.pathname !== '/' || u.search || u.hash || u.username || u.password) return null
+    return { origin: u.origin, host: u.host.toLowerCase(), pat: 'antco_pat_' + m[2] }
+  } catch { return null }
+}
+
 function resolveConfig (o) {
   const fromFile = o.envFile ? loadEnvFile(o.envFile) : {}
   const base = process.env.ANTCO_BASE_URL || ''
@@ -90,11 +102,23 @@ function resolveConfig (o) {
     const envV = process.env[k]; const fileV = fromFile[k]
     if (envV && fileV && envV !== fileV) fail(EXIT.CONFIG, `${k} trong biến môi trường khác với file ${o.envFile} - chọn một nguồn rồi chạy lại`)
   }
-  const baseUrl = (fromFile.ANTCO_BASE_URL || base).trim()
-  const apiKey = (fromFile.ANTCO_API_KEY || key).trim()
-  if (!baseUrl) fail(EXIT.CONFIG, 'thiếu ANTCO_BASE_URL (origin workspace, VD https://<cong-ty>.example.com)')
-  if (!apiKey) fail(EXIT.CONFIG, 'thiếu ANTCO_API_KEY (Antco: Cài đặt > Tích hợp > API Token)')
+  let baseUrl = (fromFile.ANTCO_BASE_URL || base).trim()
+  let apiKey = (fromFile.ANTCO_API_KEY || key).trim()
+  if (!apiKey) fail(EXIT.CONFIG, 'thiếu ANTCO_API_KEY (Antco: Cài đặt > Tích hợp > API Token - dán Khoá kết nối antco_ck_...)')
   if (/\s/.test(apiKey)) fail(EXIT.CONFIG, 'ANTCO_API_KEY chứa khoảng trắng - kiểm tra lại cách sao chép')
+  if (apiKey.startsWith('antco_ck_')) {
+    // Khoá kết nối (Antco 20.479): gộp sẵn địa chỉ công ty + token -> không cần ANTCO_BASE_URL; gửi phần antco_pat_ (chạy cả với máy chủ cũ)
+    const ck = parseConnectionKey(apiKey)
+    if (!ck) fail(EXIT.CONFIG, 'ANTCO_API_KEY: khoá kết nối không đúng định dạng - sao chép lại nguyên chuỗi antco_ck_... từ Antco')
+    if (baseUrl) {
+      let h = ''
+      try { h = new URL(baseUrl).host.toLowerCase() } catch { fail(EXIT.CONFIG, 'ANTCO_BASE_URL không phải URL hợp lệ') }
+      if (h !== ck.host) fail(EXIT.CONFIG, `ANTCO_BASE_URL (${h}) khác địa chỉ trong khoá kết nối (${ck.host}) - bỏ ANTCO_BASE_URL hoặc dùng đúng khoá`)
+    }
+    baseUrl = baseUrl || ck.origin
+    apiKey = ck.pat
+  }
+  if (!baseUrl) fail(EXIT.CONFIG, 'thiếu ANTCO_BASE_URL (origin workspace, VD https://<cong-ty>.example.com) - hoặc dùng Khoá kết nối antco_ck_... (đã gồm địa chỉ)')
   let u
   try { u = new URL(baseUrl) } catch { fail(EXIT.CONFIG, 'ANTCO_BASE_URL không phải URL hợp lệ') }
   const local = ['localhost', '127.0.0.1', '[::1]'].includes(u.hostname)
@@ -138,7 +162,7 @@ function readBody (o) {
 function redact (s, apiKey) {
   let out = String(s)
   if (apiKey && apiKey.length >= 6) out = out.split(apiKey).join('***')
-  return out.replace(/antco_pat_[A-Za-z0-9_-]{6,}/g, 'antco_pat_***')
+  return out.replace(/antco_pat_[A-Za-z0-9_-]{6,}/g, 'antco_pat_***').replace(/antco_ck_[A-Za-z0-9_-]{6,}/g, 'antco_ck_***')
 }
 
 const RUN_ID = /^[A-Za-z0-9_.:-]{3,80}$/

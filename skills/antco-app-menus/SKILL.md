@@ -4,12 +4,12 @@ description: "Cấu hình menu trái từng phân hệ Antco qua Public API: s�
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco App Menus (menu ứng dụng)
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Bộ lọc để gắn vào mục menu: [../antco-filters/SKILL.md](../antco-filters/SKILL.md).
 
 ## Mô hình

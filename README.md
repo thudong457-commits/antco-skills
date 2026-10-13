@@ -2,7 +2,7 @@
 
 Bộ **Agent Skills** (thư mục `SKILL.md`) giúp Claude Code, Codex và các agent hỗ trợ chuẩn Agent Skills **tuỳ biến Antco ERP từ mô tả nghiệp vụ**: bạn dán một API token Antco vào file `.env`, mô tả nhu cầu ("tôi cần quản lý khảo sát hiện trường + phương án kỹ thuật..."), agent sẽ khảo sát hệ thống, hỏi lại những điểm chưa rõ bằng một form, đề xuất thiết kế + kế hoạch để bạn duyệt, rồi mới tạo đối tượng, trường, giao diện, quy tắc, bộ lọc, báo cáo và dữ liệu demo qua **Antco Public API v1**.
 
-> **English summary.** Agent Skills bundle for customizing Antco ERP via its Public API v1. Put `ANTCO_BASE_URL` and `ANTCO_API_KEY` in a git-ignored `.env`, describe your business process, and the `build-antco-app` orchestrator surveys your workspace read-only, asks clarifying questions through an offline HTML form, proposes a design and a dependency-ordered plan behind two approval gates, then applies it with server-side dry runs first, run-id tagging, read-back verification and a hashed delivery manifest. Specialist skills cover objects, fields, records/demo data, layouts, rules, actions, public forms, filters, related lists, reports and dashboards. Node.js >= 18, no dependencies. MIT licensed.
+> **English summary.** Agent Skills bundle for customizing Antco ERP via its Public API v1. Put the one-string connection key (`ANTCO_API_KEY=<antco_ck_...>`, which already contains your workspace URL) in a git-ignored `.env`, describe your business process, and the `build-antco-app` orchestrator surveys your workspace read-only, asks clarifying questions through an offline HTML form, proposes a design and a dependency-ordered plan behind two approval gates, then applies it with server-side dry runs first, run-id tagging, read-back verification and a hashed delivery manifest. Specialist skills cover objects, fields, records/demo data, layouts, rules, actions, public forms, filters, related lists, reports and dashboards. Node.js >= 18, no dependencies. MIT licensed.
 
 - Phiên bản bundle: xem [VERSION](VERSION) (`1.0.0`, 2026-10-02) · Nhật ký: [CHANGELOG.md](CHANGELOG.md) · Giấy phép: [MIT](LICENSE)
 
@@ -53,12 +53,13 @@ cp .env.example .env      # Windows PowerShell: Copy-Item .env.example .env
 ```
 
 ```dotenv
-ANTCO_BASE_URL=https://<cong-ty>.antco.com.vn
-ANTCO_API_KEY=<dán token vào đây, không có dấu nháy>
+ANTCO_API_KEY=<dán Khoá kết nối antco_ck_... vào đây, không có dấu nháy>
 ```
 
-- `ANTCO_BASE_URL` = **origin** của công ty bạn trên Antco (không đường dẫn, không `/` cuối).
-- `.env` đã nằm trong `.gitignore`. **Không commit, không dán token vào chat, log hay ảnh chụp màn hình.**
+- **Khoá kết nối** đã gồm sẵn địa chỉ công ty - chỉ cần 1 dòng này (hộp tạo token của Antco có nút "Sao chép dòng").
+- Token cũ dạng `antco_pat_...` vẫn dùng được, khi đó thêm dòng `ANTCO_BASE_URL=https://<cong-ty>.pest.vn` (origin, không đường dẫn, không `/` cuối).
+- Dùng trợ lý AI dạng chat (không có `.env`): dán Khoá kết nối khi trợ lý hỏi; nên đặt hạn dùng ngắn và Vô hiệu hóa token khi xong việc.
+- `.env` đã nằm trong `.gitignore`. **Không commit, không dán khoá vào log, ảnh chụp màn hình hay kênh chat chung.**
 - Agent đọc token từ biến môi trường hoặc qua `node scripts/antco_client.mjs --env .env ...` (chỉ đọc đúng 2 khoá trên).
 - Kiểm tra nhanh: `node scripts/antco_client.mjs --env .env whoami` (Git Bash trên Windows: viết path không có `/` đầu, VD `objects`).
 

@@ -4,12 +4,12 @@ description: "Thiết kế dữ liệu Antco bằng workbook Excel (.xlsx): mỗ
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco Schema Workbook
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Quy tắc đối tượng: [../antco-objects/SKILL.md](../antco-objects/SKILL.md). Kiểu trường + cài đặt: [../antco-fields/references/field-types.md](../antco-fields/references/field-types.md). Công thức: [../antco-fields/references/formula.md](../antco-fields/references/formula.md).
 - Script (sau khi cài nằm ở `../antco-api-auth/scripts/`; chạy từ repo thì ở `scripts/`): `schema_workbook.mjs` (Node.js >= 18, không thư viện ngoài; đọc / ghi .xlsx bằng `scripts/xlsx_lite.mjs`; gọi API qua `scripts/antco_client.mjs`).
 

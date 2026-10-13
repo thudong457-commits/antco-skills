@@ -4,12 +4,12 @@ description: "Thiết kế, tạo, kiểm sơ đồ, xuất bản, kích hoạt 
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco Processes (quy trình + phê duyệt)
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Sơ đồ + từng loại bước: [references/nodes.md](references/nodes.md). Đối tượng / trường dùng trong bước: [../antco-objects/SKILL.md](../antco-objects/SKILL.md), [../antco-fields/SKILL.md](../antco-fields/SKILL.md).
 
 ## Quyền

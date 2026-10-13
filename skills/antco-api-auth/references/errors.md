@@ -24,7 +24,7 @@ Luôn đọc cả HTTP status, `success` và `error.code`. `error.message` là t
 |---|---|
 | 0 | Thành công, hoặc dry-run phía client đã in request |
 | 2 | Sai cách dùng |
-| 3 | Thiếu / sai cấu hình (`ANTCO_BASE_URL`, `ANTCO_API_KEY`) |
+| 3 | Thiếu / sai cấu hình (`ANTCO_API_KEY`; khoá kết nối sai định dạng; `ANTCO_BASE_URL` khác địa chỉ trong khoá) |
 | 4 | API trả lỗi (HTTP không 2xx hoặc `success: false`) |
 | 5 | Lỗi mạng / timeout / bị chuyển hướng |
 

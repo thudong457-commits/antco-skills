@@ -1,29 +1,30 @@
 ---
 name: antco-api-auth
-description: "Quy tắc dùng chung khi gọi Antco Public API v1 (/api/public/v1): đọc ANTCO_BASE_URL + ANTCO_API_KEY từ biến môi trường, kiểm tra token bằng GET /whoami, header Bearer, X-Antco-Run-Id, ?dryRun=1, phong bì { success, data, meta, error }, mã lỗi, giới hạn 120 lần/60 giây, danh sách API bị cấm, không bao giờ in token. Dùng trước mọi lời gọi API Antco của các skill antco-*, khi gặp lỗi 401/403/429, hoặc khi người dùng hỏi cách tạo/cấu hình API token Antco cho agent."
+description: "Quy tắc dùng chung khi gọi Antco Public API v1 (/api/public/v1): đọc ANTCO_API_KEY (Khoá kết nối antco_ck_ gồm sẵn địa chỉ công ty) từ biến môi trường, kiểm tra token bằng GET /whoami, header Bearer, X-Antco-Run-Id, ?dryRun=1, phong bì { success, data, meta, error }, mã lỗi, giới hạn 120 lần/60 giây, danh sách API bị cấm, không bao giờ in token. Dùng trước mọi lời gọi API Antco của các skill antco-*, khi gặp lỗi 401/403/429, hoặc khi người dùng hỏi cách tạo/cấu hình API token Antco cho agent."
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco API Auth (dùng chung)
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13` - Hợp đồng API: Antco Public API v1 `1.0.0`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13` - Hợp đồng API: Antco Public API v1 `1.0.0`
 - Mọi skill `antco-*` dẫn về file này. Danh mục endpoint: [references/public-api-v1.md](references/public-api-v1.md). Mã lỗi: [references/errors.md](references/errors.md).
 
-## 1. Credential (chỉ 2 biến)
+## 1. Credential (1 khoá)
 
 | Biến | Ý nghĩa | Ví dụ (placeholder) |
 |---|---|---|
-| `ANTCO_BASE_URL` | Origin của công ty trên Antco (tên miền riêng từng công ty, không đường dẫn, không `/` cuối) | `https://<cong-ty>.antco.com.vn` |
-| `ANTCO_API_KEY` | API token, dạng `antco_pat_` + 40 ký tự | không bao giờ ghi giá trị thật vào file được commit |
+| `ANTCO_API_KEY` | **Khoá kết nối** `antco_ck_...` - 1 chuỗi gộp sẵn địa chỉ công ty + token (Antco hiện khi tạo token). Cũng nhận token cũ `antco_pat_` + 40 ký tự | không bao giờ ghi giá trị thật vào file được commit |
+| `ANTCO_BASE_URL` | Chỉ cần khi dùng token cũ `antco_pat_`: origin công ty (không đường dẫn, không `/` cuối). Dùng khoá kết nối thì bỏ trống; có mà khác địa chỉ trong khoá -> client báo lỗi | `https://<cong-ty>.pest.vn` |
 
-Thứ tự nạp: (1) biến môi trường của phiên / kho bí mật của agent; (2) file `.env` cục bộ **do người dùng chỉ định**, nằm trong `.gitignore` (`antco_client.mjs --env <file>` chỉ đọc đúng 2 khoá này).
+Thứ tự nạp: (1) biến môi trường của phiên / kho bí mật của agent; (2) file `.env` cục bộ **do người dùng chỉ định**, nằm trong `.gitignore` (`antco_client.mjs --env <file>` chỉ đọc đúng 2 khoá này). `antco_client.mjs` tự tách khoá kết nối: lấy địa chỉ công ty, gửi phần `antco_pat_` trong header.
 
 Luật bắt buộc:
-- **Không bao giờ** in, ghi log, ghi vào artifact, URL, lệnh shell, commit hay câu trả lời giá trị token. Nói về token chỉ bằng `token.name` / `token.prefix` mà `/whoami` trả về.
-- **Không** xin người dùng dán token vào chat. Thấy token trong chat/file: không lặp lại, khuyên người dùng xoá token đó và tạo token mới.
+- **Không bao giờ** in, ghi log, ghi vào artifact, URL, lệnh shell, commit hay câu trả lời giá trị khoá / token. Nói về token chỉ bằng `token.name` / `token.prefix` mà `/whoami` trả về.
+- **Agent dạng chat** (claude.ai, ChatGPT... - khách không sửa được `.env`): chưa có biến thì được xin người dùng dán **Khoá kết nối** đúng 1 lần (ưu tiên ô nhập bí mật / kho bí mật của trợ lý nếu có). Nhận được thì ghi ngay vào file `.env` cục bộ của phiên (gitignore) và gọi qua `--env`; không lặp lại giá trị, không đưa vào lệnh shell / tham số. Nhắc người dùng đặt hạn dùng ngắn và Vô hiệu hóa token khi xong việc.
+- Thấy token / khoá bị dán vào nơi khác (file được commit, artifact, ảnh, kênh chung): không lặp lại, khuyên người dùng xoá token đó và tạo token mới.
 - **Không** dò ổ đĩa, lịch sử shell, repo khác để tìm token. Biến môi trường và `.env` mâu thuẫn -> **dừng**, hỏi dùng nguồn nào.
 - Không truyền token qua tham số dòng lệnh; script chỉ đọc từ môi trường.
 
@@ -31,7 +32,7 @@ Luật bắt buộc:
 
 Antco: **Cài đặt > Tích hợp > API Token > "+ Tạo mới Token"** (cần quyền `settings:api_tokens:write`, mặc định chỉ Quản trị hệ thống):
 - Chọn **"Chạy API dưới vai trò"** = một người dùng nội bộ đang hoạt động. Token có **đúng quyền của người đó** (vai trò chính + kiêm nhiệm + quyền tạm thời), không hơn. Khuyên chọn người có đủ quyền cấu hình cần thiết nhưng không phải tài khoản dùng chung.
-- Đặt hạn dùng ngắn; **sao chép token ngay** (chỉ hiện 1 lần). Mất token = tạo token mới, xoá token cũ.
+- Chọn hạn dùng (mặc định 90 ngày); **sao chép Khoá kết nối ngay** (chỉ hiện 1 lần - hộp có sẵn dòng `ANTCO_API_KEY=...` cho `.env` và hướng dẫn dán vào trợ lý AI). Mất khoá = tạo token mới, xoá token cũ.
 - Người chạy là Quản trị mà **chưa bật 2FA** -> mọi lời gọi bị `403 TWO_FACTOR_SETUP_REQUIRED`.
 
 Quyền tối thiểu theo việc (người chạy API phải có):
@@ -57,9 +58,10 @@ node <scripts>/antco_client.mjs whoami
 
 | Trạng thái | Điều kiện | Việc tiếp theo |
 |---|---|---|
-| `VERIFIED` | HTTP 200, `success: true`, `workspace.baseUrl` cùng origin với `ANTCO_BASE_URL`, `expiresAt` chưa qua, có quyền cần cho bước sắp làm (`allAccess` hoặc mã trong `codes`) | Tiếp tục |
+| `VERIFIED` | HTTP 200, `success: true`, `workspace.baseUrl` cùng origin với địa chỉ đang gọi (trong khoá kết nối hoặc `ANTCO_BASE_URL`), `expiresAt` chưa qua, có quyền cần cho bước sắp làm (`allAccess` hoặc mã trong `codes`) | Tiếp tục |
 | `MISSING` | Thiếu biến | Hướng dẫn mục 1-2, dừng |
 | `INVALID` | 401 (`INVALID_TOKEN`, `TOKEN_INACTIVE`, `TOKEN_EXPIRED`) | Người dùng tạo / kích hoạt token mới |
+| `WRONG_WORKSPACE` (máy chủ) | 401 `WRONG_WORKSPACE`: khoá kết nối của công ty khác với địa chỉ đang gọi | Dùng đúng khoá / bỏ `ANTCO_BASE_URL` sai |
 | `RUN_AS_BLOCKED` | 403 `RUN_AS_USER_INACTIVE` / `TWO_FACTOR_SETUP_REQUIRED` | Người dùng đổi người chạy hoặc bật 2FA |
 | `WRONG_WORKSPACE` | `workspace.baseUrl` khác origin | Dừng, không gọi tiếp |
 | `INSUFFICIENT_PERMISSION` | Thiếu quyền cần | Nêu đúng mã quyền thiếu; phần chỉ đọc vẫn làm được |

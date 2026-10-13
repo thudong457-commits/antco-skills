@@ -4,12 +4,12 @@ description: "Quản lý mẫu văn bản Antco qua Public API cho MỌI đối 
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco Document Templates (mẫu văn bản)
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Bước "Xuất bản ghi" trong quy trình: [../antco-processes/references/nodes.md](../antco-processes/references/nodes.md).
 
 ## Quyền

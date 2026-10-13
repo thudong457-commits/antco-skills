@@ -2,6 +2,21 @@
 
 Theo [Semantic Versioning](https://semver.org/). Ngày theo giờ Việt Nam (UTC+7).
 
+## [1.2.0] - 2026-10-13
+
+Theo Antco 20.479: **Khoá kết nối** 1 chuỗi (giống Cogover) - khách chỉ dán 1 khoá vào AI agent.
+
+### Thêm
+
+- `antco_client.mjs`: `ANTCO_API_KEY` nhận Khoá kết nối `antco_ck_...` (gộp địa chỉ công ty + token) -> tự lấy địa chỉ, không cần `ANTCO_BASE_URL`;
+  có cả `ANTCO_BASE_URL` mà khác địa chỉ trong khoá -> lỗi cấu hình (mã 3). Gửi phần `antco_pat_` nên chạy được cả với máy chủ Antco cũ. Che `antco_ck_` trong mọi đầu ra.
+- `secret_scan.mjs`: mẫu `ANTCO_CONNECTION_KEY`; `validate_artifacts.mjs`: manifest có `antco_ck_` -> lỗi.
+
+### Đổi
+
+- `antco-api-auth`: credential còn 1 khoá; agent dạng chat (claude.ai, ChatGPT...) được xin người dùng dán Khoá kết nối đúng 1 lần, ghi vào `.env` cục bộ của phiên
+  rồi gọi qua `--env` (không lặp lại, không đưa vào lệnh shell); thêm lỗi máy chủ `401 WRONG_WORKSPACE`. README, `build-antco-app`, tài liệu hợp đồng theo cách mới.
+
 ## [1.1.0] - 2026-10-13
 
 Theo hợp đồng **Antco Public API v1** mở rộng lên 139 endpoint.

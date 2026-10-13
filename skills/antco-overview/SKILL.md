@@ -4,12 +4,12 @@ description: "Bản đồ Antco ERP cho agent: các phân hệ (CRM, Kế toán,
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco Overview
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Chỉ đọc, không gọi API ghi. Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md).
 
 ## 1. Antco là gì (theo góc nhìn tuỳ biến)

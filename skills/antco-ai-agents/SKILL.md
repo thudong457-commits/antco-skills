@@ -4,12 +4,12 @@ description: "Tạo, cấu hình và chat thử AI Agent trong Antco qua Public 
 license: MIT
 metadata:
   author: Antco
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Antco AI Agents
 
-- **Phiên bản:** `1.1.0` - **Ngày phát hành:** `2026-10-13`
+- **Phiên bản:** `1.2.0` - **Ngày phát hành:** `2026-10-13`
 - Xác thực: [../antco-api-auth/SKILL.md](../antco-api-auth/SKILL.md). Đối tượng cho công cụ Bản ghi: [../antco-objects/SKILL.md](../antco-objects/SKILL.md). Quy trình cho công cụ Quy trình: [../antco-processes/SKILL.md](../antco-processes/SKILL.md).
 
 ## Mô hình
